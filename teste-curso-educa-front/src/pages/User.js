@@ -26,43 +26,49 @@ function User() {
   return(
     <div>
       <Header/>
-      <h1> Bem-vindo </h1>
-      <h2> faça seu registro: </h2>
-      <form>
-        <div>
-          <input
-          type="email"
-          value={ email }
-          placeholder="digite seu email:"
-          onChange={({ target: { value } }) => setEmail(value)}
-          />
-        </div>
-        <div>
-          <input
-          type="name"
-          value={ name }
-          placeholder="digite seu nome:"
-          onChange={({ target: { value } }) => setName(value)}
-          />
-        </div>
-        <div>
-          <input
-          type="password"
-          value={password}
-          placeholder="digite sua senha:"
-          onChange={({ target: { value } }) => setPassword(value)}
-          />
-        </div>
-        <div>
-        <button
-          className="btn-entrar"
-          type="button"
-          onClick={ handleClick }
-          >
-            Registrar 
-          </button>
-        </div>
-      </form>
+      <div className="flex flex-col items-center justify-center p-10">
+        <h1 className="font-bold text-3xl m-4"> Bem-vindo </h1>
+        <h2> faça seu registro: </h2>
+        <form>
+          <div className="mb-2">
+            <input
+            className=" bg-slate-200 w-[325px] p-1 border-1 rounded"
+            type="email"
+            color="#000"
+            value={ email }
+            placeholder="digite seu email:"
+            onChange={({ target: { value } }) => setEmail(value)}
+            />
+          </div>
+          <div className="mb-2">
+            <input
+            className=" bg-slate-200 w-[325px] p-1 border-1 rounded"
+            type="name"
+            value={ name }
+            placeholder="digite seu nome:"
+            onChange={({ target: { value } }) => setName(value)}
+            />
+          </div>
+          <div className="mb-2">
+            <input
+            className=" bg-slate-200 w-[325px] p-1 border-1 rounded"
+            type="password"
+            value={password}
+            placeholder="digite sua senha:"
+            onChange={({ target: { value } }) => setPassword(value)}
+            />
+          </div>
+          <div className="flex justify-center bg-blue-700 text-white border-2 rounded hover:bg-blue-900 p-2">
+            <button
+              className=""
+              type="button"
+              onClick={ handleClick }
+              >
+                Registrar 
+              </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
