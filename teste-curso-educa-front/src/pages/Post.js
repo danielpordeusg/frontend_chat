@@ -9,7 +9,6 @@ function Post () {
   const [message, setMessage] = useState('');
   const [listMessageNew, setListMessageNew] = useState([])
   const [listMessage, setListMessage] = useState([]);
-  console.log('log do id', userId)
 
    async function handleClick () {
     try {
@@ -35,7 +34,7 @@ function Post () {
       }
     }
     getMessage()
-  }, []);
+  }, [listMessage]);
   
   useEffect (() => {
   if (listMessageNew !== listMessage) 
