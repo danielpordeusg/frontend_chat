@@ -23,7 +23,7 @@ function User() {
     }
   }
     function changeToLoginPage() {
-    history('/login')
+    history('/login');
   }
 
   return(

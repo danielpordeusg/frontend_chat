@@ -5,11 +5,10 @@ import AppContext from '../context/AppContext';
 import jwt from 'jwt-decode';
 import Header from '../components.js/Header';
 import Input from '../components.js/Input';
-import Button from '../components.js/Button';
 
 
 function Login () {
-  const {setUserId, setUserEmail } = useContext(AppContext)
+  const {setUserId, setUserEmail } = useContext(AppContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useNavigate();
@@ -20,10 +19,9 @@ function Login () {
       email: email,
       password: password,
     })
-    const user = jwt(res.data)
-    setUserEmail(user.data.email)
-    setUserId(user.data.id)
-    console.log('token', user)
+    const user = jwt(res.data);
+    setUserEmail(user.data.email);
+    setUserId(user.data.id);
     history('/post')
     } catch (error) {
       console.log(JSON.stringify(error));
