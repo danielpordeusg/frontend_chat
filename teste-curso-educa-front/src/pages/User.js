@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import api from '../api/Api'
+import Header from '../components.js/Header';
 
 
 function User() {
@@ -24,9 +25,7 @@ function User() {
 
   return(
     <div>
-      <header>
-        <h1> Educachat </h1>
-      </header>
+      <Header/>
       <h1> Bem-vindo </h1>
       <h2> faça seu registro: </h2>
       <form>

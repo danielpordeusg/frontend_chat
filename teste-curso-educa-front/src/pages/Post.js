@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import PostCard from '../components.js/PostCard';
 import api from '../api/Api'
 import AppContext from '../context/AppContext';
+import Header from '../components.js/Header';
 
 function Post () {
   const { userId } = useContext(AppContext)
@@ -37,45 +38,55 @@ function Post () {
   }, []);
   
   useEffect (() => {
-    listMessageNew !== listMessage ?? setListMessage(listMessageNew)
+  if (listMessageNew !== listMessage) 
+    setListMessage(listMessageNew)
   },[listMessageNew])
 
   
   
   return(
-    <div>
-      <header>
-        <h1> Educachat </h1>
-      </header>
-      {listMessage && listMessage !== [] && listMessage.map((value) => {
-        return <PostCard 
-          key={value.id}
-          listMessage={listMessage}
-          setListMessage={setListMessage}
-          message={value.message}
-          id={value.id}
-        ></PostCard>
-      })}
-      <form>
-        <textarea 
-        type="message"
-        value={ message }
-        placeholder="faça sua postagem"
-        onChange={({ target: { value } }) => setMessage(value)}
-        >
+    <div className="flex items-center flex-col">
+      <Header/>
+      <div className="mb-16">
+        <div className="h-[100px] w-screen flex items-center justify-center border-4 border-blue-800">
+          <h1 className="text-4xl text-blue-800"> Educachat </h1>
+        </div>
+      </div>
+      <div className="flex flex-col items-center content-center">
+        <div className="h-[500px] w-[650px] overflow-auto border-2">
+          {listMessage && listMessage !== [] && listMessage.map((value) => {
+            return <PostCard 
+              key={value.id}
+              listMessage={listMessage}
+              setListMessage={setListMessage}
+              message={value.message}
+              userName={'usuario'}
+              id={value.id}
+            ></PostCard>
+          })}
+        </div>
+        <form className="flex-1 w-[650px] flex flex-row border-2 border-blue-800">
+          <textarea
+          className="bg-slate-200 w-8/12 text-left"
+          type="message"
+          value={ message }
+          placeholder="faça sua postagem"
+          onChange={({ target: { value } }) => setMessage(value)}
+          >
 
-        </textarea>
-        <button
-        className="btn-login"
-        type=""
-        onClick={ (e) => {
-          e.preventDefault(); 
-          handleClick() 
-        }}
-        >
-          Clique pra enviar mensagem
-        </button>
-      </form>
+          </textarea>
+          <button
+          className="bg-slate-200 w-4/12 hover:bg-slate-400 p-1.5 rounded"
+          type=""
+          onClick={ (e) => {
+            e.preventDefault(); 
+            handleClick() 
+          }}
+          >
+            Clique pra enviar mensagem
+          </button>
+        </form>
+      </div>
     </div>
   )
 }

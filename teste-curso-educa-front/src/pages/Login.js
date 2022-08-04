@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import api from '../api/Api'
 import AppContext from '../context/AppContext';
 import jwt from 'jwt-decode';
+import Header from '../components.js/Header';
 
 
 function Login () {
@@ -29,9 +30,7 @@ function Login () {
 
   return(
     <div>
-      <header>
-        <h1> Educachat </h1>
-      </header>
+      <Header/>
       <h1> Bem-vindo </h1>
       <h2> faça seu login para entrar</h2>
       <form>
