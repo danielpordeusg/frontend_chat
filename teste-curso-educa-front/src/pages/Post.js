@@ -5,41 +5,64 @@ import AppContext from '../context/AppContext';
 import Header from '../components.js/Header';
 
 function Post () {
-  const { userId } = useContext(AppContext)
+  const { userId } = useContext(AppContext);
+  const [messageId, setMessageId] = useState(0)
   const [message, setMessage] = useState('');
-  const [listMessageNew, setListMessageNew] = useState([])
+  const [editMessage, setEditMessage] = useState(false)
+  const [newMessage, setNewMessage] = useState('');
+  const [listMessageNew, setListMessageNew] = useState([]);
   const [listMessage, setListMessage] = useState([]);
 
    async function handleClick () {
     try {
-      console.log('log da messagasem', message)
       await api.post("/posts", {
         message: message,
         userId: userId
       })
       setMessage('')
+      window.location.reload();
     } catch (error) {
-      console.log(JSON.stringify(error))
+      console.log(JSON.stringify(error));
     }
-   
   }
+  async function handleEdit (id) {
+    try {
+      setEditMessage(true)
+      setNewMessage('')
+      setMessageId(id)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleEditButton () {
+    try {
+      await api.put(`/posts/${messageId}`, 
+      {
+        message: message,
+      })
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect (() => {
     async function getMessage() {
       try {
         const res = await api.get("/posts");
-        // console.log('res', res)
-        setListMessageNew(res.data)
+        setListMessageNew(res.data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
     getMessage()
-  }, [listMessage]);
+  }, []);
   
   useEffect (() => {
   if (listMessageNew !== listMessage) 
-    setListMessage(listMessageNew)
-  },[listMessageNew])
+    setListMessage(listMessageNew);
+  },[listMessageNew]);
 
   
   
@@ -60,8 +83,10 @@ function Post () {
                 listMessage={listMessage}
                 setListMessage={setListMessage}
                 message={value.message}
-                userName={'usuario'}
+                userName={value.userId}
                 id={value.id}
+                editMessage={editMessage}
+                handleEdit={handleEdit}
               ></PostCard>
             })}
           </div>
@@ -75,16 +100,24 @@ function Post () {
             >
 
             </textarea>
+            {editMessage ?
+            <button 
+              onClick={ (e) => {e.preventDefault();
+                handleEditButton() }} 
+            >
+              Editar mensagem 
+            </button> :
             <button
             className="bg-slate-200 w-4/12 hover:bg-slate-400 p-1.5 rounded"
             type=""
             onClick={ (e) => {
               e.preventDefault(); 
-              handleClick() 
+              handleClick()
             }}
             >
               Clique pra enviar mensagem
             </button>
+}
           </form>
         </div>
       </div>
