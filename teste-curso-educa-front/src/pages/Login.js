@@ -1,22 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useContext} from 'react';
 import { useNavigate } from 'react-router';
-import Axios from 'axios';
+import api from '../api/Api'
+import AppContext from '../context/AppContext';
+import jwt from 'jwt-decode';
 
 
 function Login () {
+  const {setUserId, setUserEmail } = useContext(AppContext)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useNavigate();
 
   async function handleClick() {
     try {
-      await Axios.post("http://localhost:3001/login", {
+      const res = await api.post("/login", {
       email: email,
       password: password,
     })
-    history('/posts')
+    const user = jwt(res.data)
+    setUserEmail(user.data.email)
+    setUserId(user.data.id)
+    console.log('token', user)
+    history('/post')
     } catch (error) {
-      console.log(error);
+      console.log(JSON.stringify(error));
     }
   };
 
