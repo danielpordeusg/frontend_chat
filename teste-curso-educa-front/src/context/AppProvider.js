@@ -1,22 +1,22 @@
-// import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
-// import AppContext from './AppContext';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import AppContext from './AppContext';
 
-// function AppProvider({ children }) {
-//   const [email, setEmail] = useState('');
+function AppProvider({ children }) {
+  const [userEmail, setUserEmail] = useState('');
+  const [userId, setUserId] = useState(18);
 
-//   return (
-//     <AppContext.Provider
-//       value={ { email,
-//         setEmail, } }
-//     >
-//       { children }
-//     </AppContext.Provider>
-//   );
-// }
+  return (
+    <AppContext.Provider
+      value={ { userEmail, setUserEmail, userId, setUserId} }
+    >
+      { children }
+    </AppContext.Provider>
+  );
+}
 
-// AppProvider.propTypes = {
-//   children: PropTypes.node.isRequired,
-// };
+AppProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
-// export default AppProvider;
+export default AppProvider;
