@@ -22,6 +22,9 @@ function User() {
       console.log(JSON.stringify(error));
     }
   }
+    function changeToLoginPage() {
+    history('/login')
+  }
 
   return(
     <div>
@@ -65,6 +68,15 @@ function User() {
               onClick={ handleClick }
               >
                 Registrar 
+              </button>
+          </div>
+          <div className="flex justify-center bg-blue-700 text-white border-2 rounded hover:bg-blue-900 p-2">
+            <button
+              className=""
+              type="button"
+              onClick={ changeToLoginPage }
+              >
+                Já tenho uma conta 
               </button>
           </div>
         </form>

@@ -4,6 +4,8 @@ import api from '../api/Api'
 import AppContext from '../context/AppContext';
 import jwt from 'jwt-decode';
 import Header from '../components.js/Header';
+import Input from '../components.js/Input';
+import Button from '../components.js/Button';
 
 
 function Login () {
@@ -31,35 +33,36 @@ function Login () {
   return(
     <div>
       <Header/>
-      <h1> Bem-vindo </h1>
+      <div className="flex flex-col items-center justify-center p-10">
+      <h1 className="font-bold text-3xl m-4"
+      > 
+      Bem-vindo 
+      </h1>
       <h2> faça seu login para entrar</h2>
-      <form>
-        <div>
-          <input
-          type="email"
-          value={ email }
-          placeholder="digite seu email:"
-          onChange={({ target: { value } }) => setEmail(value)}
+        <form>
+          <Input 
+          value={email}
+          type={"email"}
+          placeholder={"Digite seu email:"}
+          onChange={ ({ target: { value } }) => setEmail(value)}
           />
-        </div>
-        <div>
-          <input
-          type="password"
-          value={password}
-          placeholder="digite sua senha:"
-          onChange={({ target: { value } }) => setPassword(value)}
-          />
-        </div>
-        <div>
-        <button
-          className="btn-login"
-          type="button"
-          onClick={ handleClick }
-          >
-            Entrar
-          </button>
-        </div>
-      </form>
+          <Input 
+            value={password}
+            type={"password"}
+            placeholder={"Digite sua senha:"}
+            onChange={ ({ target: { value } }) => setPassword(value)}
+            />
+          <div className="flex justify-center bg-blue-700 text-white border-2 rounded hover:bg-blue-900 p-2 min-h-1">
+            <button
+              className="btn-login"
+              type="button"
+              onClick={ handleClick }
+              >
+                Entrar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
