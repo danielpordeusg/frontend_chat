@@ -36,5 +36,7 @@ PASSOS DE CONFIGURAÇÃO
   - vocẽ pode apagar em uma mensagem clicando no segundo icon && confirmando clicando em apagar
   
   extras: 
-  * existe uma validação de quantidade do name e user *
-  * existe um token para confirmação de registro e login*
+  - existe uma validação de quantidade do name e user 
+  - existe um token para confirmação de registro e login
+  - como foi pedido no projeto para ter acessebilidade eu usei o tailwind css que hoje é uma das melhores ferramentas para acessibilidade 
+  
