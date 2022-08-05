@@ -36,6 +36,7 @@ function User() {
           <div className="mb-2">
             <input
             className=" bg-slate-200 w-[325px] p-1 border-1 rounded"
+            required
             type="email"
             color="#000"
             value={ email }
@@ -47,6 +48,8 @@ function User() {
             <input
             className=" bg-slate-200 w-[325px] p-1 border-1 rounded"
             type="name"
+            minLength="3"
+            required
             value={ name }
             placeholder="digite seu nome:"
             onChange={({ target: { value } }) => setName(value)}
@@ -56,6 +59,8 @@ function User() {
             <input
             className=" bg-slate-200 w-[325px] p-1 border-1 rounded"
             type="password"
+            minLength="7"
+            required
             value={password}
             placeholder="digite sua senha:"
             onChange={({ target: { value } }) => setPassword(value)}
@@ -64,7 +69,7 @@ function User() {
           <div className="flex justify-center bg-blue-700 text-white border-2 rounded hover:bg-blue-900 p-2">
             <button
               className=""
-              type="button"
+              type="submit"
               onClick={ handleClick }
               >
                 Registrar 
