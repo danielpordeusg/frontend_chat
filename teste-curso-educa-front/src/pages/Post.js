@@ -1,57 +1,85 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect} from 'react';
 import PostCard from '../components.js/PostCard';
 import api from '../api/Api'
-import AppContext from '../context/AppContext';
 import Header from '../components.js/Header';
 
 function Post () {
-  const { userId } = useContext(AppContext);
+  const user = JSON.parse(localStorage.getItem('user'));
   const [messageId, setMessageId] = useState(0)
+  const [status, setStatus] = useState('send')
   const [message, setMessage] = useState('');
-  const [editMessage, setEditMessage] = useState(false)
-  const [newMessage, setNewMessage] = useState('');
-  const [listMessageNew, setListMessageNew] = useState([]);
   const [listMessage, setListMessage] = useState([]);
 
    async function handleClick () {
     try {
-      await api.post("/posts", {
+      const post = (await api.post("/posts", {
         message: message,
-        userId: userId
-      })
+        userId: user.id
+      })).data.post
       setMessage('')
-      window.location.reload();
+      setListMessage((previousValue) => [...previousValue, {userName: user.name ,message, userId: user.id, id: post.id}])
     } catch (error) {
       console.log(JSON.stringify(error));
     }
   }
   async function handleEdit (id) {
     try {
-      setEditMessage(true)
-      setNewMessage('')
+      setStatus('edit')
+      setMessage('')
       setMessageId(id)
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function handleEditButton () {
+  async function handleEditMessage () {
     try {
       await api.put(`/posts/${messageId}`, 
       {
         message: message,
       })
-      window.location.reload();
+      const messageIndex = listMessage.findIndex((message) => message.id === messageId);
+      const newListMessage = listMessage;
+      newListMessage[messageIndex] = {...newListMessage[messageIndex], message};
+      setListMessage(newListMessage);
+      setStatus('send')
+      setMessage('')
     } catch (error) {
       console.log(error);
     }
   }
 
+  async function handleRemove (id) {
+    try {
+      setStatus('remove')
+      setMessageId(id)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleRemoveMessage () {
+    try {
+      setStatus('remove')
+      await api.delete(`/posts/${messageId}`, 
+      {
+        message: message,
+      })
+      const newListMessage = listMessage.filter((message) => message.id !== messageId);
+      setListMessage(newListMessage);
+      setStatus('send')
+      setMessage('')
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   useEffect (() => {
     async function getMessage() {
       try {
         const res = await api.get("/posts");
-        setListMessageNew(res.data);
+        setListMessage(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -59,10 +87,10 @@ function Post () {
     getMessage()
   }, []);
   
-  useEffect (() => {
-  if (listMessageNew !== listMessage) 
-    setListMessage(listMessageNew);
-  },[listMessageNew]);
+  // useEffect (() => {
+  // if (listMessageNe !== listMessage) 
+  //   setListMessage(listMessageNew);
+  // },[listMessageNew]);
 
   
   
@@ -79,14 +107,15 @@ function Post () {
           <div className="h-[500px] w-[650px] overflow-auto border-2">
             {listMessage && listMessage !== [] && listMessage.map((value) => {
               return <PostCard 
-                key={value.id}
+                key={`${value.id}-${value.userId}`}
                 listMessage={listMessage}
                 setListMessage={setListMessage}
                 message={value.message}
-                userName={value.userId}
+                userName={value.userName}
                 id={value.id}
-                editMessage={editMessage}
+                editMessage={status === 'edit'}
                 handleEdit={handleEdit}
+                handleRemove={handleRemove}
               ></PostCard>
             })}
           </div>
@@ -100,14 +129,22 @@ function Post () {
             >
 
             </textarea>
-            {editMessage ?
+            {status === 'edit' &&
             <button 
               onClick={ (e) => {e.preventDefault();
-                handleEditButton() }} 
+                handleEditMessage() }} 
             >
               Editar mensagem 
-            </button> :
-            <button
+            </button> }
+            {status === 'remove' &&
+            <button 
+              onClick={ (e) => {e.preventDefault();
+                handleRemoveMessage() }} 
+            >
+              Remova a mensagem 
+            </button> }
+            {status === 'send' &&
+              <button
             className="bg-slate-200 w-4/12 hover:bg-slate-400 p-1.5 rounded"
             type=""
             onClick={ (e) => {
@@ -115,9 +152,8 @@ function Post () {
               handleClick()
             }}
             >
-              Clique pra enviar mensagem
-            </button>
-}
+              Clique pra enviar a mensagem
+            </button>}
           </form>
         </div>
       </div>
