@@ -1,14 +1,12 @@
-import React, { useState, useContext} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import api from '../api/Api'
-import AppContext from '../context/AppContext';
 import jwt from 'jwt-decode';
 import Header from '../components.js/Header';
 import Input from '../components.js/Input';
 
 
 function Login () {
-  const {setUserId, setUserEmail } = useContext(AppContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useNavigate();
@@ -19,9 +17,8 @@ function Login () {
       email: email,
       password: password,
     })
-    const user = jwt(res.data);
-    setUserEmail(user.data.email);
-    setUserId(user.data.id);
+    const user = jwt(res.data).data;
+    localStorage.setItem('user', JSON.stringify(user));
     history('/post')
     } catch (error) {
       console.log(JSON.stringify(error));
@@ -41,12 +38,15 @@ function Login () {
           <Input 
           value={email}
           type={"email"}
+          required
           placeholder={"Digite seu email:"}
           onChange={ ({ target: { value } }) => setEmail(value)}
           />
           <Input 
             value={password}
             type={"password"}
+            minLength="7"
+            required
             placeholder={"Digite sua senha:"}
             onChange={ ({ target: { value } }) => setPassword(value)}
             />
