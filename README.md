@@ -15,16 +15,16 @@ PASSOS DE CONFIGURAÇÃO
 
 1 - Com o banco de dados já upado de um npm start
 
-2 - vão existe 3 telas a do Usuario na /, Login no /login, e o post aonde vai estar o chat no /post, com um user
-correto será redirecionado a rota login, com o login correto vocẽ será entrara na rota post
+2 - vão existe 3 telas a do Usuario na /, Login no /login, e o post aonde vai estar o chat no /post.
 
 3 - User: 
     - vocẽ tera que registrar o usuário com um email valido ex: "email@email.com 
     - vocẽ tera que registrar o usuário com um nome maior que 3 letras
     - vocẽ tera que registrar o usuário com uma senha maior que 7 para ser valido
+    - assim que seu registro for completo aperte em já tenho uma conta para ir para proxima página
     
 4 - Login:
-  - vocẽ terar que logar com um usuário existente
+  - vocẽ terar que logar com um email existente
   - vocẽ tera que logar com uma senha existente
   
 5 - Post :
