@@ -10,6 +10,12 @@ function PostCard (props) {
       >
         Edit
       </button>
+      <button
+        onClick={ () => {props.handleRemove(props.id)} }
+      >
+       Remove
+      </button>
+
     </div>
   )
 }
